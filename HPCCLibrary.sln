@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.106
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HPCCLibrary", "HPCCLibrary\HPCCLibrary.csproj", "{3965B330-9954-4D75-8A2B-69ECFBE9080F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntitiesLayer", "EntitiesLayer\EntitiesLayer.csproj", "{A63369A6-176F-491D-9C2B-B023C57A72A3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{3965B330-9954-4D75-8A2B-69ECFBE9080F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3965B330-9954-4D75-8A2B-69ECFBE9080F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3965B330-9954-4D75-8A2B-69ECFBE9080F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A63369A6-176F-491D-9C2B-B023C57A72A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A63369A6-176F-491D-9C2B-B023C57A72A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A63369A6-176F-491D-9C2B-B023C57A72A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A63369A6-176F-491D-9C2B-B023C57A72A3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
