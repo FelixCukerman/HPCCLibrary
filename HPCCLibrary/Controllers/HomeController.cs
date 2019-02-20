@@ -5,11 +5,20 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using HPCCLibrary.Models;
+using DataAccessLayer;
+using DataAccessLayer.Interfaces;
+using EntitiesLayer.Entities;
 
 namespace HPCCLibrary.Controllers
 {
     public class HomeController : Controller
     {
+        private IGenreRepository repository;
+        public HomeController(IGenreRepository repository)
+        {
+            this.repository = repository;
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -18,7 +27,7 @@ namespace HPCCLibrary.Controllers
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
-
+            repository.Create(new Genre { Title = "Action"});
             return View();
         }
 

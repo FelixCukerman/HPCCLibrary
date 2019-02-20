@@ -2,10 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DataAccessLayer;
+using DataAccessLayer.Interfaces;
+using DataAccessLayer.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -13,6 +17,8 @@ namespace HPCCLibrary
 {
     public class Startup
     {
+        private const string connectionString = "Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = LibraryDB; Integrated Security = True; Connect Timeout = 30; Encrypt = False; TrustServerCertificate = False; ApplicationIntent = ReadWrite; MultiSubnetFailover = False";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -32,6 +38,8 @@ namespace HPCCLibrary
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddTransient<IGenreRepository, GenreRepository>();
+            services.AddDbContext<LibraryContext>(options => options.UseSqlServer(connectionString, b => b.MigrationsAssembly("DataAccessLayer")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

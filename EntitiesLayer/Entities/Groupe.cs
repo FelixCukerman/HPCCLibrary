@@ -2,17 +2,21 @@
 using EntitiesLayer.Enums;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace EntitiesLayer.Entities
 {
-    public class Subject : BaseEntity
+    public class Groupe : BaseEntity
     {
-        public string Name { get; set; }
-        public Speciality Speciality { get; set; }
+        [Required]
+        public int Name { get; set; }
+        [Required]
         public Course Course { get; set; }
+        [Required]
+        public GroupeType GroupeType { get; set; }
 
-        public Subject()
+        public Groupe()
         {
             DateOfCreation = DateTime.Now;
         }

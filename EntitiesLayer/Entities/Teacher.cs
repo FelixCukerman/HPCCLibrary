@@ -1,5 +1,4 @@
 ﻿using EntitiesLayer.Abstraction;
-using EntitiesLayer.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,14 +6,13 @@ using System.Text;
 
 namespace EntitiesLayer.Entities
 {
-    public class Student : BaseUserEntity
+    public class Teacher : BaseUserEntity
     {
-        public Course Course { get; set; }
-        public int? GroupeId { get; set; }
-        [ForeignKey("GroupeId")]
-        public Groupe Groupe { get; set; }
+        public int? SubjectId { get; set; }
+        [ForeignKey("SubjectId")]
+        public Subject Subject { get; set; }
 
-        public Student()
+        public Teacher()
         {
             DateOfCreation = DateTime.Now;
         }
