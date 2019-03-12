@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DataAccessLayer.Interfaces
 {
-    interface IGroupeRepository : IRepository<Groupe>
+    public interface IGroupeRepository : IRepository<Groupe>
     {
     }
 }

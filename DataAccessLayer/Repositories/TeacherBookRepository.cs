@@ -6,7 +6,7 @@ using System.Text;
 
 namespace DataAccessLayer.Repositories
 {
-    class TeacherBookRepository : GenericRepository<TeacherBook>, ITeacherBookRepository
+    public class TeacherBookRepository : GenericRepository<TeacherBook>, ITeacherBookRepository
     {
         public TeacherBookRepository(LibraryContext context) : base(context)
         {

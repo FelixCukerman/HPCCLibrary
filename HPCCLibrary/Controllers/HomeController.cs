@@ -8,15 +8,16 @@ using HPCCLibrary.Models;
 using DataAccessLayer;
 using DataAccessLayer.Interfaces;
 using EntitiesLayer.Entities;
+using BusinessLogicLayer.Interfaces;
 
 namespace HPCCLibrary.Controllers
 {
     public class HomeController : Controller
     {
-        private IGenreRepository repository;
-        public HomeController(IGenreRepository repository)
+        private ILibraryService libraryService;
+        public HomeController(ILibraryService libraryService)
         {
-            this.repository = repository;
+            this.libraryService = libraryService;
         }
 
         public IActionResult Index()
@@ -24,10 +25,10 @@ namespace HPCCLibrary.Controllers
             return View();
         }
 
-        public IActionResult About()
+        public async Task<IActionResult> About()
         {
+            var a = await libraryService.GetAllGenre();
             ViewData["Message"] = "Your application description page.";
-            repository.Create(new Genre { Title = "Action"});
             return View();
         }
 

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BusinessLogicLayer.Interfaces;
+using BusinessLogicLayer.Services;
 using DataAccessLayer;
 using DataAccessLayer.Interfaces;
 using DataAccessLayer.Repositories;
@@ -39,6 +41,14 @@ namespace HPCCLibrary
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddTransient<IGenreRepository, GenreRepository>();
+            services.AddTransient<IBookRepository, BookRepository>();
+            services.AddTransient<IGroupeRepository, GroupeRepository>();
+            services.AddTransient<IStudentRepository, StudentRepository>();
+            services.AddTransient<IStudentBookRepository, StudentBookRepository>();
+            services.AddTransient<ISubjectRepository, SubjectRepository>();
+            services.AddTransient<ITeacherRepository, TeacherRepository>();
+            services.AddTransient<ITeacherBookRepository, TeacherBookRepository>();
+            services.AddTransient<ILibraryService, LibraryService>();
             services.AddDbContext<LibraryContext>(options => options.UseSqlServer(connectionString, b => b.MigrationsAssembly("DataAccessLayer")));
         }
 
