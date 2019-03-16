@@ -25,5 +25,12 @@ namespace HPCCLibrary.Controllers
         {
             return await libraryService.GetAllGenre();
         }
+
+
+        public async Task CreateBook(Book book)
+        {
+            await libraryService.CreateBook(book);
+        }
+
     }
 }

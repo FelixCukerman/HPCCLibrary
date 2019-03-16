@@ -33,5 +33,11 @@ namespace BusinessLogicLayer.Services
             var result = await genreRepository.Get();
             return result;
         }
+
+        public async Task CreateBook(Book book)
+        {
+            await bookRepository.Create(book); 
+
+        }
     }
 }
