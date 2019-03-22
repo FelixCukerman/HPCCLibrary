@@ -9,6 +9,7 @@ using DataAccessLayer;
 using DataAccessLayer.Interfaces;
 using EntitiesLayer.Entities;
 using BusinessLogicLayer.Interfaces;
+using BusinessLogicLayer.ViewModels;
 
 namespace HPCCLibrary.Controllers
 {
@@ -27,7 +28,8 @@ namespace HPCCLibrary.Controllers
 
         public async Task<IActionResult> About()
         {
-            var a = await libraryService.GetAllGenre();
+            CreateBookViewModel book = new CreateBookViewModel { Author = "1", Genre = "Action", Language = "2", Publisher = "3", Title = "4", Year = 1290 };
+            await libraryService.CreateBook(book);
             ViewData["Message"] = "Your application description page.";
             return View();
         }

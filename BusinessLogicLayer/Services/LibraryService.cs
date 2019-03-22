@@ -6,6 +6,8 @@ using DataAccessLayer.Interfaces;
 using EntitiesLayer.Entities;
 using System.Threading.Tasks;
 using BusinessLogicLayer.Interfaces;
+using AutoMapper;
+using BusinessLogicLayer.ViewModels;
 
 namespace BusinessLogicLayer.Services
 {
@@ -17,8 +19,9 @@ namespace BusinessLogicLayer.Services
         private IStudentRepository studentRepository;
         private IStudentBookRepository studentBookRepository;
         private ISubjectRepository subjectRepository;
+        private IMapper mapper;
 
-        public LibraryService(IBookRepository bookRepository, IGenreRepository genreRepository, IGroupeRepository groupeRepository, IStudentRepository studentRepository, IStudentBookRepository studentBookRepository, ISubjectRepository subjectRepository)
+        public LibraryService(IBookRepository bookRepository, IGenreRepository genreRepository, IGroupeRepository groupeRepository, IStudentRepository studentRepository, IStudentBookRepository studentBookRepository, ISubjectRepository subjectRepository, IMapper mapper)
         {
             this.bookRepository = bookRepository;
             this.genreRepository = genreRepository;
@@ -26,6 +29,7 @@ namespace BusinessLogicLayer.Services
             this.studentRepository = studentRepository;
             this.studentBookRepository = studentBookRepository;
             this.subjectRepository = subjectRepository;
+            this.mapper = mapper;
         }
 
         public async Task<IEnumerable<Genre>> GetAllGenre()
@@ -34,9 +38,10 @@ namespace BusinessLogicLayer.Services
             return result;
         }
 
-        public async Task CreateBook(Book book)
+        public async Task CreateBook(CreateBookViewModel book)
         {
-            await bookRepository.Create(book); 
+            Book bookToCreate = mapper.Map<Book>(book);
+            await bookRepository.Create(bookToCreate);
 
         }
     }

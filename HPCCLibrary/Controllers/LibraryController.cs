@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BusinessLogicLayer.Interfaces;
+using BusinessLogicLayer.ViewModels;
 using EntitiesLayer.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -27,7 +28,7 @@ namespace HPCCLibrary.Controllers
         }
 
 
-        public async Task CreateBook(Book book)
+        public async Task CreateBook(CreateBookViewModel book)
         {
             await libraryService.CreateBook(book);
         }

@@ -8,5 +8,6 @@ namespace DataAccessLayer.Interfaces
 {
     public interface IGenreRepository : IRepository<Genre>
     {
+        Task<Genre> GetGenreByTitle(string title);
     }
 }

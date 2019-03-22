@@ -13,5 +13,12 @@ namespace DataAccessLayer.Repositories
         public GenreRepository(LibraryContext context) : base(context)
         {
         }
+
+        public async Task<Genre> GetGenreByTitle(string title)
+        {
+            Genre result = await _data.Genres.FirstOrDefaultAsync(genre => genre.Title == title);
+
+            return result;
+        }
     }
 }
