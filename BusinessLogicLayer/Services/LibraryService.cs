@@ -38,11 +38,49 @@ namespace BusinessLogicLayer.Services
             return result;
         }
 
-        public async Task CreateBook(CreateBookViewModel book)
+        public async Task CreateBook(CreateBookViewModel request)
         {
-            Book bookToCreate = mapper.Map<Book>(book);
+            Book bookToCreate = mapper.Map<Book>(request);
             await bookRepository.Create(bookToCreate);
+        }
 
+        public async Task<List<Book>> GetBooksByGenre(string genreTitle)
+        {
+            Genre genre = await genreRepository.GetGenreByTitle(genreTitle);
+            List<Book> books = await bookRepository.GetBooksByGenre(genre.Id);
+
+            return books;
+        }
+
+        public async Task<List<Book>> GetBooksByAuthor(string author)
+        {
+            List<Book> books = await bookRepository.GetBooksByAuthor(author);
+
+            return books;
+        }
+
+        public async Task<List<Book>> GetBooksByLanguage(string language)
+        {
+            List<Book> books = await bookRepository.GetBooksByLanguage(language);
+
+            return books;
+        }
+
+        public async Task AddBookToFavorites(AddBookToFavoritesViewModel request)
+        {
+            Book book = await bookRepository.GetByTitle(request.Booktitle);
+            Student user = await studentRepository.GetByName(request.Name, request.Surname);
+
+            StudentBook createRequest = new StudentBook { BookId = book.Id, StudentId = user.Id };
+
+            await studentBookRepository.Create(createRequest);
+        }
+
+        public async Task<List<StudentBook>> GetFavoriteBooks(int studentId)
+        {
+            List<StudentBook> result = await studentBookRepository.GetByUser(studentId);
+
+            return result;
         }
     }
 }
