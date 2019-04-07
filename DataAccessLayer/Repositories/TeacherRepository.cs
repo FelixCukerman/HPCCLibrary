@@ -1,8 +1,7 @@
 ﻿using DataAccessLayer.Interfaces;
 using EntitiesLayer.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace DataAccessLayer.Repositories
 {
@@ -10,6 +9,11 @@ namespace DataAccessLayer.Repositories
     {
         public TeacherRepository(LibraryContext context) : base(context)
         {
+        }
+
+        public async Task<Teacher> GetByName(string name, string surname)
+        {
+            return await _data.Teachers.FirstOrDefaultAsync(item => item.Name == name && item.Surname == surname);
         }
     }
 }

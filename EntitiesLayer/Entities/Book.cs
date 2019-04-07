@@ -14,6 +14,9 @@ namespace EntitiesLayer.Entities
         public int? GenreId { get; set; }
         [ForeignKey("GenreId")]
         public Genre Genre { get; set; }
+        public int? SubjectId { get; set; }
+        [ForeignKey("SubjectId")]
+        public Subject Subject { get; set; }
         public string Publisher { get; set; }
         public int Year { get; set; }
         public string Language { get; set; }

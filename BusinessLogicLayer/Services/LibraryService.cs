@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using BusinessLogicLayer.Interfaces;
 using AutoMapper;
 using BusinessLogicLayer.ViewModels;
+using System.Linq;
 
 namespace BusinessLogicLayer.Services
 {
@@ -19,9 +20,11 @@ namespace BusinessLogicLayer.Services
         private IStudentRepository studentRepository;
         private IStudentBookRepository studentBookRepository;
         private ISubjectRepository subjectRepository;
+        private ITeacherRepository teacherRepository;
+        private ITeacherBookRepository teacherBookRepository;
         private IMapper mapper;
 
-        public LibraryService(IBookRepository bookRepository, IGenreRepository genreRepository, IGroupeRepository groupeRepository, IStudentRepository studentRepository, IStudentBookRepository studentBookRepository, ISubjectRepository subjectRepository, IMapper mapper)
+        public LibraryService(IBookRepository bookRepository, IGenreRepository genreRepository, IGroupeRepository groupeRepository, IStudentRepository studentRepository, IStudentBookRepository studentBookRepository, ISubjectRepository subjectRepository, ITeacherRepository teacherRepository, ITeacherBookRepository teacherBookRepository, IMapper mapper)
         {
             this.bookRepository = bookRepository;
             this.genreRepository = genreRepository;
@@ -29,6 +32,8 @@ namespace BusinessLogicLayer.Services
             this.studentRepository = studentRepository;
             this.studentBookRepository = studentBookRepository;
             this.subjectRepository = subjectRepository;
+            this.teacherRepository = teacherRepository;
+            this.teacherBookRepository = teacherBookRepository;
             this.mapper = mapper;
         }
 
@@ -36,6 +41,12 @@ namespace BusinessLogicLayer.Services
         {
             var result = await genreRepository.Get();
             return result;
+        }
+
+        public async Task CreateGenre(string name, string description)
+        {
+            Genre genre = new Genre { Title = name, Description = description };
+            await genreRepository.Create(genre);
         }
 
         public async Task CreateBook(CreateBookViewModel request)
@@ -76,11 +87,60 @@ namespace BusinessLogicLayer.Services
             await studentBookRepository.Create(createRequest);
         }
 
+        public async Task AddTeacherBook(AddBookToFavoritesViewModel request)
+        {
+            Book book = await bookRepository.GetByTitle(request.Booktitle);
+            Teacher user = await teacherRepository.GetByName(request.Name, request.Surname);
+
+            TeacherBook createRequest = new TeacherBook { BookId = book.Id, TeacherId = user.Id };
+
+            await teacherBookRepository.Create(createRequest);
+        }
+
         public async Task<List<StudentBook>> GetFavoriteBooks(int studentId)
         {
             List<StudentBook> result = await studentBookRepository.GetByUser(studentId);
 
             return result;
+        }
+
+        public async Task DeleteFavoriteBook(int studentId, int bookId)
+        {
+            IEnumerable<StudentBook> result = await studentBookRepository.Get();
+            var a = result.FirstOrDefault(x => x.BookId == bookId && x.StudentId == studentId);
+            await studentBookRepository.Delete(a);
+        }
+
+        public async Task<IEnumerable<TeacherBook>> GetTeacherBooks(int teacherId)
+        {
+            IEnumerable<TeacherBook> result = await teacherBookRepository.Get();
+            result = result.Where(item => item.TeacherId == teacherId);
+
+            return result;
+        }
+
+        public async Task DeleteTeacherBook(int teacherId, int bookId)
+        {
+            IEnumerable<TeacherBook> result = await teacherBookRepository.Get();
+            var a = result.FirstOrDefault(x => x.BookId == bookId && x.TeacherId == teacherId);
+            await teacherBookRepository.Delete(a);
+        }
+
+        public async Task<IEnumerable<Book>> GetAllBooks()
+        {
+            return await bookRepository.Get();
+        }
+
+        public async Task<IEnumerable<Genre>> GetAllGenres()
+        {
+            return await genreRepository.Get();
+        }
+
+        public async Task<IEnumerable<Book>> GetBooksBySubject(string subjectName)
+        {
+            Subject subject = (await subjectRepository.Get()).FirstOrDefault(item => item.Name == subjectName);
+
+            return (await GetAllBooks()).Where(x => x.SubjectId == subject.Id);
         }
     }
 }
